@@ -1,0 +1,32 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  # Setup Vagrant box environment.
+  config.vm.box = "ubuntu/jammy64"
+  config.vm.box_version = "20241002.0.0"
+
+  # Create a public network, which generally matched to bridged network.
+  config.vm.network "public_network", ip: "192.168.50.201"
+
+  # Share the folder containing jupyterhub setup with the guest VM..
+  config.vm.synced_folder "../littlest-jupyterhub", "/littlest-jupyterhub"
+
+  # Disable the default share of the current code directory. Doing this
+  # provides improved isolation between the vagrant box and your host.
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+
+  # Use virtualbox as VM provider.
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "2048"
+    vb.cpus = 2
+  end
+
+  # Enable provisioning with a shell script.
+  config.vm.provision "shell", inline: <<-SHELL
+    apt-get update
+    chmod a+x /littlest-jupyterhub/install.sh
+    sudo /littlest-jupyterhub/install.sh
+  SHELL
+end
