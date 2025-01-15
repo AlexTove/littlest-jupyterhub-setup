@@ -36,4 +36,5 @@ echo "Creating shared folder..."
 sudo mkdir -p /srv/data/shared_data
 cd /etc/skel
 sudo ln -s /srv/data/shared_data shared_data
+
 # (Optional) Download data into /srv/data/my_shared_data_folder
