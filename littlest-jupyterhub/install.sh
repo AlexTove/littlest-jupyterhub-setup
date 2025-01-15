@@ -17,12 +17,13 @@ sudo apt --assume-yes install python3 python3-dev git curl
 # 2. Install TLJH
 
 echo "Installing The Littlest JupyterHub..."
-curl -L https://tljh.jupyter.org/bootstrap.py | sudo python3 - --admin "$ADMIN_USER:$ADMIN_PASSWORD"
+curl -L https://tljh.jupyter.org/bootstrap.py | sudo python3 - --admin "$ADMIN_USER":"$ADMIN_PASSWORD"
 
 # 3. Configure authentication
 
 # Set up native authentication
 echo "Setting up native authentication..."
+sudo tljh-config set auth.NativeAuthenticator.allow_all true
 sudo tljh-config set auth.type nativeauthenticator.NativeAuthenticator
 sudo tljh-config set auth.NativeAuthenticator.open_signup false
 
