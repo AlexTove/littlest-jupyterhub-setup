@@ -1,0 +1,21 @@
+1.) Create a folder next to this README called nfs-storage with permissions 777
+	mkdir nfs-storage
+	sudo chmod 777 nfs-storage
+
+2.) Run the container:
+	docker compose up
+
+3.) Install NFS dependencies
+	sudo apt install nfs-client
+
+OR
+
+Run the included script: ./run.sh
+-------------------------------------------
+
+4.)Mount the exposed folder on your machine.
+	sudo mount -v <ip_of_container>:/ /path/to/local/mountpoint
+
+# !!NOTE!!
+NFS does not allow sharing filesystems on the local machine, this docker container
+needs to be run in a VM or seperate machine in order to work.
