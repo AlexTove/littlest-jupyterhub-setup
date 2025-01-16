@@ -12,11 +12,11 @@ echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashi
 sudo apt update && sudo apt install vagrant
 
 # Install VirtualBox
-# NU PENTRU ANDREI, NU MERGE
-# sudo apt install virtualbox
+sudo apt install virtualbox
 
 # Start Vagrant
 cd vagrant-nfs
 vagrant up
+
 cd ../vagrant
 vagrant up

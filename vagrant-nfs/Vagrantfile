@@ -8,7 +8,7 @@ Vagrant.configure("2") do |config|
   config.vm.box_version = "20241002.0.0"
 
   # Create a public network, which generally matched to bridged network.
-  config.vm.network "public_network", ip: "192.168.100.202"
+  config.vm.network "public_network", ip: "192.168.50.202"
 
   # Share the folder containing jupyterhub setup with the guest VM..
   config.vm.synced_folder "../storage", "/storage"
