@@ -36,7 +36,7 @@ global:
 scrape_configs:
   - job_name: 'jupyterhub'
     static_configs:
-      - targets: ['194.233.167.147:8000']  # IP-ul VM-ului și portul 8000 pentru JupyterHub
+      - targets: ['192.168.50.201:8000']  # IP-ul VM-ului și portul 8000 pentru JupyterHub
 EOL
 
 # 5. Health check pentru JupyterHub (verifică starea sănătății)
@@ -44,7 +44,7 @@ echo "Adăugare health check pentru JupyterHub..."
 cat <<EOL > jupyterhub_healthcheck.sh
 #!/bin/bash
 # Verifică dacă JupyterHub răspunde la /hub/health
-curl -f http://194.233.167.147:8000/hub/health
+curl -f http://192.168.50.201:8000/hub/health
 if [ \$? -eq 0 ]; then
   echo "JupyterHub este sănătos!"
 else
