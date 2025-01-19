@@ -11,12 +11,10 @@ shopt -s extglob
 
 sudo apt install nfs-common -y
 
-# Set up nfs
+mkdir -p /srv/notebooks
 
-sudo mkdir -p /mnt/nfs
-# Backup home.
-sudo mkdir -p /temphome
-sudo mv /home/* /temphome
-sudo mount -t nfs 192.168.50.202:/srv/nfs /home
-cp -r /temphome/* /home
-rm -rf /temphome/*
+echo "Mounting NFS partition"
+sudo mount -t nfs 192.168.50.202:/srv/nfs /srv/notebooks
+
+cp /littlest-jupyterhub/spawner_config.py /opt/tljh/config/jupyterhub_config.d/
+sudo tljh-config reload hub

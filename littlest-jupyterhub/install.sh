@@ -20,6 +20,7 @@ sudo apt --assume-yes install python3 python3-dev git curl
 echo "Installing The Littlest JupyterHub..."
 curl -L https://tljh.jupyter.org/bootstrap.py | sudo python3 - --admin "$ADMIN_USER":"$ADMIN_PASSWORD"
 
+
 # 3. Configure authentication
 
 # Set up native authentication
@@ -36,4 +37,7 @@ sudo tljh-config reload
 
 echo "Creating shared folder..."
 sudo mkdir -p /srv/data/shared_data
+
+cd /etc/skel
+sudo ln -s /srv/data/shared_data shared_data
 

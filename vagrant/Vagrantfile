@@ -21,22 +21,21 @@ Vagrant.configure("2") do |config|
 
   # Use virtualbox as VM provider.
   config.vm.provider "virtualbox" do |vb|
+    vb.name = "tljh"
     vb.memory = "2048"
     vb.cpus = 2
   end
 
   # Enable provisioning with a shell script.
   config.vm.provision "shell", inline: <<-SCRIPT
-    /bin/bash
+    chmod a+x /littlest-jupyterhub/install.sh
+    sudo /littlest-jupyterhub/install.sh
 
     chmod a+x /storage/mount-setup.sh
     sudo /storage/mount-setup.sh
-    wait
-    chmod a+x /littlest-jupyterhub/install.sh
-    sudo /littlest-jupyterhub/install.sh
-    wait
+
     chmod a+x /monitor/provision-monitoring.sh
     sudo /monitor/provision-monitoring.sh
-    wait
+    
   SCRIPT
 end

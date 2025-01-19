@@ -19,6 +19,7 @@ Vagrant.configure("2") do |config|
 
   # Use virtualbox as VM provider.
   config.vm.provider "virtualbox" do |vb|
+    vb.name = "tljh-nfs"
     vb.memory = "2048"
     vb.cpus = 2
   end
