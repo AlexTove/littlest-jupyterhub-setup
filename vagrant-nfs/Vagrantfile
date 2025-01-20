@@ -1,14 +1,19 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+vm_ip = ENV['NFS_VM_IP'] ? ENV['NFS_VM_IP'] : '192.168.50.202'
+
+bridge_adapter = ENV['NFS_VM_BRIDGE_ADAPTER_NAME'] ? ENV['NFS_VM_BRIDGE_ADAPTER_NAME'] : 'wlp0s20f3'
+
 Vagrant.configure("2") do |config|
 
   # Setup Vagrant box environment.
   config.vm.box = "ubuntu/jammy64"
   config.vm.box_version = "20241002.0.0"
+  config.vm.hostname = "vagrant-tljh-nfs"
 
   # Create a public network, which generally matched to bridged network.
-  config.vm.network "public_network", ip: "192.168.50.202"
+  config.vm.network "public_network", ip: "#{vm_ip}", bridge: "#{bridge_adapter}"
 
   # Share the folder containing jupyterhub setup with the guest VM..
   config.vm.synced_folder "../storage", "/storage"

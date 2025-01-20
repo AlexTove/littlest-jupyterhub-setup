@@ -2,13 +2,11 @@
 set -e
 
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
-
 cd "$parent_path"
 
-# Install prerequisites and start nfs
+# Install prerequisites
 
 sudo apt install nfs-kernel-server -y
-sudo systemctl start nfs-kernel-server.service
 
 # Create export directory
 
@@ -22,4 +20,6 @@ sudo cp /storage/exports /etc/exports
 
 sudo exportfs -a
 
+# Start NFS
 
+sudo systemctl restart nfs-kernel-server.service

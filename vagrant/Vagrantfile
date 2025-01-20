@@ -1,14 +1,19 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+vm_ip = ENV['TLJH_VM_IP'] ? ENV['TLJH_VM_IP'] : '192.168.50.201'
+
+bridge_adapter = ENV['TLJH_VM_BRIDGE_ADAPTER_NAME'] ? ENV['TLJH_VM_BRIDGE_ADAPTER_NAME'] : 'wlp0s20f3'
+
 Vagrant.configure("2") do |config|
 
   # Setup Vagrant box environment.
   config.vm.box = "ubuntu/jammy64"
   config.vm.box_version = "20241002.0.0"
+  config.vm.hostname = "vagrant-tljh"
 
   # Create a public network, which generally matched to bridged network.
-  config.vm.network "public_network", ip: "192.168.50.201"
+  config.vm.network "public_network", ip: "#{vm_ip}", bridge: "#{bridge_adapter}"
 
   # Share the folder containing jupyterhub setup with the guest VM..
   config.vm.synced_folder "../littlest-jupyterhub", "/littlest-jupyterhub"
@@ -27,15 +32,19 @@ Vagrant.configure("2") do |config|
   end
 
   # Enable provisioning with a shell script.
-  config.vm.provision "shell", inline: <<-SCRIPT
+  config.vm.provision "shell",
+  env: {
+    "NFS_VM_IP" => ENV['NFS_VM_IP']
+  },
+  inline: <<-SCRIPT
     chmod a+x /littlest-jupyterhub/install.sh
-    sudo /littlest-jupyterhub/install.sh
+    sudo -E /littlest-jupyterhub/install.sh
 
     chmod a+x /storage/mount-setup.sh
-    sudo /storage/mount-setup.sh
+    sudo -E /storage/mount-setup.sh
 
-    chmod a+x /monitor/provision-monitoring.sh
-    sudo /monitor/provision-monitoring.sh
-    
+    # chmod a+x /monitor/provision-monitoring.sh
+    # sudo -E /monitor/provision-monitoring.sh
+
   SCRIPT
 end
